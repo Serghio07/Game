@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campos con Nubes y Casas de Perros</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            background-color: #87CEEB; /* Cielo */
+        }
+
+        .container {
+            flex: 1;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            overflow: hidden;
+        }
+
+        .divider {
+            width: 2px;
+            background-color: black;
+            height: 100%;
+        }
+
+        .ground {
+            height: 20%; /* Terreno más delgado */
+            background-color: #32CD32; /* Verde del campo */
+            position: relative;
+        }
+
+        .tree {
+            width: 40px;
+            height: 100px;
+            background-color: #8B4513; /* Tronco del árbol */
+            border-radius: 10px;
+            position: absolute;
+            bottom: 10px; /* Ajustado para estar más arriba */
+        }
+
+        .tree::before {
+            content: "";
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #228B22; /* Hojas del árbol */
+            border-radius: 50%;
+            top: -70px;
+            left: -30px;
+        }
+
+        .tree.one {
+            left: 15%;
+        }
+
+        .dog-house {
+            position: absolute;
+            width: 80px;
+            height: 70px;
+            background-color: #8b1313; /* Color de la casa */
+            border: 3px solid #000;
+            bottom: 20%; /* Alineado con la parte superior del terreno */
+            right: 10%;
+        }
+
+        .dog-house::before {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 45px solid transparent;
+            border-right: 35px solid transparent;
+            border-bottom: 40px solid #8b1313; /* Techo */
+            top: -40px;
+            left: -5px; /* Ajustado más a la izquierda */
+        }
+
+        .cloud {
+            position: absolute;
+            background-color: white;
+            border-radius: 50%;
+            width: 120px;
+            height: 60px;
+            top: 20%;
+            animation: moveCloud 15s linear infinite;
+        }
+
+        .cloud.dark {
+            background-color: gray; /* Nube oscura */
+        }
+
+        .cloud.dark::before,
+        .cloud.dark::after {
+            background-color: gray; /* Aseguramos que las partes de la nube oscura también sean grises */
+        }
+
+        .cloud::before, .cloud::after {
+            content: "";
+            position: absolute;
+            background-color: white; /* Color de las nubes blancas */
+            border-radius: 50%;
+        }
+
+        .cloud::before {
+            width: 90px;
+            height: 45px;
+            top: -25px;
+            left: 20px;
+        }
+
+        .cloud::after {
+            width: 70px;
+            height: 35px;
+            top: 15px;
+            right: -30px;
+        }
+
+        @keyframes moveCloud {
+            from {
+                left: -150px;
+            }
+            to {
+                left: 100%;
+            }
+        }
+
+        /* Estilos de los personajes */
+        .character {
+            width: 50px;
+            height: 50px;
+            position: absolute;
+            background-color: red;
+        }
+
+        .left-character {
+            left: 10%;
+            bottom: 20%; /* Posiciona al personaje sobre el terreno */
+        }
+
+        .right-character {
+            right: 10%;
+            bottom: 20%; /* Posiciona al personaje sobre el terreno */
+        }
+
+        /* Estilo del marcador de puntuación */
+        .score {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 24px;
+        }
+    </style>
+    <script src="script1.js" defer></script>
+</head>
+<body>
+    <div class="container">
+        <div class="ground">
+            <div class="tree one"></div>
+        </div>
+        <div class="dog-house"></div>
+        <!-- Personaje controlado por flechas y barra espaciadora -->
+        <div class="character left-character" id="leftCharacter"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="container">
+        <div class="ground">
+            <div class="tree one"></div>
+        </div>
+        <div class="dog-house"></div>
+        <!-- Personaje controlado por WASD -->
+        <div class="character right-character" id="rightCharacter"></div>
+    </div>
+
+    <!-- Contador de puntuación -->
+    <div class="score" id="score">Left: 0 | Right: 0</div>
+</body>
+</html>
